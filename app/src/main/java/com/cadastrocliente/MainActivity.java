@@ -1,7 +1,9 @@
 package com.cadastrocliente;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.EditText;
 import android.os.Bundle;
@@ -53,84 +55,155 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickIncluir(View v) {
-        //Instancia o objeto Cliente
-        Cliente cliente = new Cliente();
-        //Preenche os dtributos do objeto com os dados da interface
-        cliente.setClienteId(EditTextClienteId.getText().toString());
-        cliente.setNome(EditTextNome.getText().toString());
-        cliente.setCpf(EditTextCpf.getText().toString());
-        Valida valida = new Valida();
-        boolean cpfValido = valida.validaCPF(cliente.getCpf());
-        if (cpfValido == true) {
-            boolean resultado = cliente.inserir();
-            if (resultado == true) {
-                Toast.makeText(MainActivity.this, "Inclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
-                atualizaRegistros();
+        //Verifica se o clienteId foi preenchido
+        if (!EditTextClienteId.getText().toString().equals("")) {
+            //Instancia o objeto Cliente
+            Cliente cliente = new Cliente();
+            //Preenche os dtributos do objeto com os dados da interface
+            cliente.setClienteId(EditTextClienteId.getText().toString());
+            cliente.setNome(EditTextNome.getText().toString());
+            cliente.setCpf(EditTextCpf.getText().toString());
+            Valida valida = new Valida();
+            boolean cpfValido = valida.validaCPF(cliente.getCpf());
+            if (cpfValido == true) {
+                boolean resultado = cliente.inserir();
+                if (resultado == true) {
+                    Toast.makeText(MainActivity.this, "Inclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
+                    atualizaRegistros();
+                } else {
+                    Toast.makeText(MainActivity.this, "Inclusão não realizada!", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(MainActivity.this, "Inclusão não realizada!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "CPF Inválido!", Toast.LENGTH_SHORT).show();
+                //Coloca o foco na caixa de texto cpf
+                EditTextCpf.requestFocus();
             }
         } else {
-            Toast.makeText(MainActivity.this, "CPF Inválido!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Digite um clienteId!", Toast.LENGTH_SHORT).show();
+            //Coloca o foco na caixa de texto clienteId
+            EditTextClienteId.requestFocus();
         }
     }
 
     public void onClickAlterar(View v) {
-        //Instancia o objeto Cliente
-        Cliente cliente = new Cliente();
-        //Preenche os dtributos do objeto com os dados da interface
-        cliente.setClienteId(EditTextClienteId.getText().toString());
-        cliente.setNome(EditTextNome.getText().toString());
-        cliente.setCpf(EditTextCpf.getText().toString());
-        Valida valida = new Valida();
-        boolean cpfValido = valida.validaCPF(cliente.getCpf());
-        if (cpfValido == true) {
-            int resultado = cliente.alterar();
-            if (resultado != 0) {
-                Toast.makeText(MainActivity.this, "Alteração realizada com sucesso!", Toast.LENGTH_SHORT).show();
+        //Verifica se o clienteId foi preenchido
+        if (!EditTextClienteId.getText().toString().equals("")) {
+            //Instancia o objeto Cliente
+            Cliente cliente = new Cliente();
+            //Preenche os dtributos do objeto com os dados da interface
+            cliente.setClienteId(EditTextClienteId.getText().toString());
+            boolean resultadoConsulta = cliente.abrir();
+            if (resultadoConsulta == true) {
+                // Seta os outros dados do cliente
+                cliente.setNome(EditTextNome.getText().toString());
+                cliente.setCpf(EditTextCpf.getText().toString());
+                //Valida o cpf
+                Valida valida = new Valida();
+                boolean cpfValido = valida.validaCPF(cliente.getCpf());
+                if (cpfValido == true) {
+                    int resultadoAlteracao = cliente.alterar();
+                    if (resultadoAlteracao != 0) {
+                        Toast.makeText(MainActivity.this, "Alteração realizada com sucesso!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Alteração não realizada!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "CPF Inválido!", Toast.LENGTH_SHORT).show();
+                    //Coloca o foco na caixa de texto cpf
+                    EditTextCpf.requestFocus();
+                }
             } else {
-                Toast.makeText(MainActivity.this, "Alteração não realizada!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Cliente não encontrado, digite um clienteId válido!", Toast.LENGTH_SHORT).show();
+                //Coloca o foco na caixa de texto clienteId
+                EditTextClienteId.requestFocus();
             }
         } else {
-            Toast.makeText(MainActivity.this, "CPF Inválido!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Digite um clienteId!", Toast.LENGTH_SHORT).show();
+            //Coloca o foco na caixa de texto clienteId
+            EditTextClienteId.requestFocus();
         }
+
     }
 
     public void onClickConsultar(View v) {
-        Cliente cliente = new Cliente();
-        cliente.setClienteId(EditTextClienteId.getText().toString());
-        boolean resultado = cliente.abrir();
-        if (resultado == true) {
-            EditTextNome.setText(cliente.getNome());
-            EditTextCpf.setText(cliente.getCpf());
-            Toast.makeText(MainActivity.this, "Cliente encontrado!", Toast.LENGTH_SHORT).show();
+        //Verifica se o clienteId foi preenchido
+        if (!EditTextClienteId.getText().toString().equals("")) {
+            //Instancia o objeto Cliente
+            Cliente cliente = new Cliente();
+            //Preenche os dtributos do objeto com os dados da interface
+            cliente.setClienteId(EditTextClienteId.getText().toString());
+            boolean resultadoConsulta = cliente.abrir();
+            if (resultadoConsulta == true) {
+                EditTextNome.setText(cliente.getNome());
+                EditTextCpf.setText(cliente.getCpf());
+                Toast.makeText(MainActivity.this, "Cliente encontrado!", Toast.LENGTH_SHORT).show();
+                EditTextClienteId.requestFocus();
+            } else {
+                Toast.makeText(MainActivity.this, "Cliente não encontrado!", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(MainActivity.this, "Cliente não encontrado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Digite um clienteId!", Toast.LENGTH_SHORT).show();
+            //Coloca o foco na caixa de texto clienteId
+            EditTextClienteId.requestFocus();
         }
     }
     public void onClickExcluir(View v) {
-        //Instancia o objeto Cliente
-        Cliente cliente = new Cliente();
-        //Preenche os dtributos do objeto com os dados da interface
-        cliente.setClienteId(EditTextClienteId.getText().toString());
-        int resultado = cliente.excluir();
-        if (resultado != 0) {
-            Toast.makeText(MainActivity.this, "Exclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
-            atualizaRegistros();
+        //Verifica se o clienteId foi preenchido
+        if (!EditTextClienteId.getText().toString().equals("")) {
+            //Instancia o objeto Cliente
+            Cliente cliente = new Cliente();
+            //Preenche os dtributos do objeto com os dados da interface
+            cliente.setClienteId(EditTextClienteId.getText().toString());
+            boolean resultadoConsulta = cliente.abrir();
+            if (resultadoConsulta == true) {
+                int resultadoExclusao = cliente.excluir();
+                if (resultadoExclusao != 0) {
+                    Toast.makeText(MainActivity.this, "Exclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
+                    atualizaRegistros();
+                } else {
+                    Toast.makeText(MainActivity.this, "Exclusão não realizada!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "Cliente não encontrado, digite um clienteId válido!", Toast.LENGTH_SHORT).show();
+                //Coloca o foco na caixa de texto clienteId
+                EditTextClienteId.requestFocus();
+            }
         } else {
-            Toast.makeText(MainActivity.this, "Exclusão não realizada!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Digite um clienteId!", Toast.LENGTH_SHORT).show();
+            //Coloca o foco na caixa de texto clienteId
+            EditTextClienteId.requestFocus();
         }
     }
 
     public void onClickEsvaziarBD(View v) {
-        //Instancia o objeto Cliente
-        Cliente cliente = new Cliente();
-        //Apaga a tabela
-        cliente.esvaziarTabela();
-        Toast.makeText(MainActivity.this, "Tabela Apagada!", Toast.LENGTH_SHORT).show();
-        //Cria a tabela novamente
-        cliente.criar();
-        Toast.makeText(MainActivity.this, "Tabela Criada!", Toast.LENGTH_SHORT).show();
-        atualizaRegistros();
+        //Confirma a exclusão dos dados da tabela
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Esvaziar BD")
+                .setMessage("Deseja esvaziar a tabela Cliente?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Instancia o objeto Cliente
+                        Cliente cliente = new Cliente();
+                        //Apaga a tabela
+                        cliente.esvaziarTabela();
+                        Toast.makeText(MainActivity.this, "Tabela Apagada!", Toast.LENGTH_SHORT).show();
+                        //Cria a tabela novamente
+                        cliente.criar();
+                        Toast.makeText(MainActivity.this, "Tabela Criada!", Toast.LENGTH_SHORT).show();
+                        atualizaRegistros();
+                    }
+                })
+                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //não exclui, apenas fecha a mensagem
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+
+
+
+
     }
 
     public void onClickListar(View v) {
@@ -142,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         String saida = "clienteId - nome - cpf\n";
         //Percorre a lista recuperando os dados do objeto
         for (int i=0;i<lista.size();i++){
+            //Recupera o cliente i da lista
             Cliente cli = (Cliente)lista.get(i);
             saida = saida +  cli.getClienteId() + "-" + cli.getNome() + "-" + cli.getCpf() + "\n";
         }
@@ -154,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
         EditTextNome.setText("");
         EditTextCpf.setText("");
         EditTextListaDados.setText("");
+        //Coloca o foco na caixa de texto clienteId
+        EditTextClienteId.requestFocus();
     }
 
     public void onClickFechar(View v) {

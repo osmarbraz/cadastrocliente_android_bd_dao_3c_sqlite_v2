@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:text="Registros: 0"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -154,7 +154,8 @@
                 android:id="@+id/TextViewListaDados"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lista dos dados" />
+                android:text="Lista dos dados"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/EditTextListaDados"
