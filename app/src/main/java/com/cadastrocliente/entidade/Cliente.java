@@ -159,14 +159,6 @@ public class Cliente {
         }
     }
 
-    /**
-     * Cria a tabela para os dados do objeto.
-     */
-    public void criar(){
-        DAOFactory factory = DAOFactory.getDAOFactory();
-        ClienteDAO clientedao = factory.getClienteDAO();
-        clientedao.criar();
-    }
 
     /**
      * Apaga a tabela do objeto.
@@ -174,7 +166,7 @@ public class Cliente {
     public void esvaziarTabela(){
         DAOFactory factory = DAOFactory.getDAOFactory();
         ClienteDAO clientedao = factory.getClienteDAO();
-        clientedao.esvaziarTabela();
+        clientedao.apagarTabela();
     }
 
     /**

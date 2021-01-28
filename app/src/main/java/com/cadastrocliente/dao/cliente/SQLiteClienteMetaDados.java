@@ -20,9 +20,9 @@ public interface SQLiteClienteMetaDados {
     public static final String[] PK = {"CLIENTEID"};
 
     /**
-     * string com os campos para serem utilizados com insert
+     * string com os campos para serem utilizados com insert ou update
      */
-    public static String METADADOSINSERT = "CLIENTEID, NOME, CPF ";
+    public static String[] METADADOSUPDATE = {"CLIENTEID", "NOME", "CPF"};
 
     /**
      * Retorna uma string com os campos para serem utilizados com select
@@ -31,4 +31,13 @@ public interface SQLiteClienteMetaDados {
             = TABLE + ".CLIENTEID, "
             + TABLE + ".NOME, "
             + TABLE + ".CPF";
+    /**
+     * Retorna uma string com O SQL para criar a tabela
+     */
+    public static String METADADOSCREATE
+            = "create table IF NOT EXISTS " + TABLE + " " +
+            "(" + PK[0] + " integer, " +
+            "NOME varchar(100), " +
+            "CPF varchar(11), " +
+            "CONSTRAINT PK_CLIENTE PRIMARY KEY ("+ PK[0] + "))";
 }

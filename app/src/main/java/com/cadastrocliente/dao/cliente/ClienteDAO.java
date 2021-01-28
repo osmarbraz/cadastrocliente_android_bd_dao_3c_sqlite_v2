@@ -19,9 +19,7 @@ public interface ClienteDAO {
 
     public List aplicarFiltro(Object obj);
 
-    public void criar();
-
-    public void esvaziarTabela();
+    public void apagarTabela();
 
     public long getNumeroRegistros();
 }

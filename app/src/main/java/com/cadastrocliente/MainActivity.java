@@ -25,6 +25,7 @@ import java.util.List;
  */
 
 public class MainActivity extends AppCompatActivity {
+    //Componentes a serem manipulados
     private EditText EditTextClienteId;
     private EditText EditTextNome;
     private EditText EditTextCpf;
@@ -45,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Define o contexto do banco de dados
         DAOFactory.setContext(getApplicationContext());
-
-        //Cria a tabela
-        Cliente cliente =  new Cliente();
-        cliente.criar();
 
         //Atualiza a quantidade de registros
         atualizaRegistros();
@@ -209,10 +206,6 @@ public class MainActivity extends AppCompatActivity {
                         //Apaga a tabela
                         cliente.esvaziarTabela();
                         Toast.makeText(MainActivity.this, "Tabela Apagada!", Toast.LENGTH_SHORT).show();
-                        //Cria a tabela novamente
-                        cliente.criar();
-                        Toast.makeText(MainActivity.this, "Tabela Criada!", Toast.LENGTH_SHORT).show();
-                        atualizaRegistros();
                     }
                 })
                 .setNegativeButton("Não", new DialogInterface.OnClickListener() {

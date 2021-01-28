@@ -22,18 +22,7 @@ import com.cadastrocliente.dao.cliente.SQLiteClienteDAO;
  */
 public class SQLiteDAOFactory extends DAOFactory implements SQLiteDadosBanco {
 
-    /**
-     * Retorna uma conexão aberta para as subclasses da fábrica para SQLite.
-     *
-     * @return Connection Um objeto com a conexão aberta
-     */
-    protected SQLiteDatabase getConnection()  {
-        SQLiteDatabase con = getContext().openOrCreateDatabase(DATABASE, 0, null);
-
-        return con;
-    }
-
-    /**
+     /**
      * Retorna uma Cliente DAO.
      *
      * @return ClienteDAO Um DAO para cliente.

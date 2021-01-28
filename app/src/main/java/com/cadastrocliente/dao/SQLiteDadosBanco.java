@@ -11,4 +11,5 @@ public interface SQLiteDadosBanco {
 
     //Altere aqui os dados do seu banco de dados	
     public String DATABASE = "cliente.db";
+    public int VERSAO = 1;
 }
