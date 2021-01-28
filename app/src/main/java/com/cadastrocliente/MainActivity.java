@@ -156,13 +156,33 @@ public class MainActivity extends AppCompatActivity {
             cliente.setClienteId(EditTextClienteId.getText().toString());
             boolean resultadoConsulta = cliente.abrir();
             if (resultadoConsulta == true) {
-                int resultadoExclusao = cliente.excluir();
-                if (resultadoExclusao != 0) {
-                    Toast.makeText(MainActivity.this, "Exclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
-                    atualizaRegistros();
-                } else {
-                    Toast.makeText(MainActivity.this, "Exclusão não realizada!", Toast.LENGTH_SHORT).show();
-                }
+
+                //Confirma a exclusão dos dados da tabela
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Excluir cliente") //Título da janela de diálogo
+                        .setMessage("Desejar excluir o registro?") //Mensagem da janela de diálogo
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Ação para a resposta sim
+
+                                int resultadoExclusao = cliente.excluir();
+                                if (resultadoExclusao != 0) {
+                                    Toast.makeText(MainActivity.this, "Exclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
+                                    atualizaRegistros();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Exclusão não realizada!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Ação para a resposta não
+
+                                //não exclui, apenas fecha a mensagem
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             } else {
                 Toast.makeText(MainActivity.this, "Cliente não encontrado, digite um clienteId válido!", Toast.LENGTH_SHORT).show();
                 //Coloca o foco na caixa de texto clienteId
@@ -178,10 +198,12 @@ public class MainActivity extends AppCompatActivity {
     public void onClickEsvaziarBD(View v) {
         //Confirma a exclusão dos dados da tabela
         new AlertDialog.Builder(MainActivity.this)
-                .setTitle("Esvaziar BD")
-                .setMessage("Deseja esvaziar a tabela Cliente?")
+                .setTitle("Esvaziar BD") //Título da janela de diálogo
+                .setMessage("Deseja esvaziar a tabela Cliente?") //Mensagem da janela de diálogo
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        //Ação para a resposta sim
+
                         //Instancia o objeto Cliente
                         Cliente cliente = new Cliente();
                         //Apaga a tabela
@@ -195,15 +217,13 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        //Ação para a resposta não
+
                         //não exclui, apenas fecha a mensagem
                         dialog.dismiss();
                     }
                 })
                 .show();
-
-
-
-
     }
 
     public void onClickListar(View v) {
