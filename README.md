@@ -11,7 +11,7 @@
  - O projeto no Android Studio deve ser chamado cadastrocliente.<br>
  - Este programa possui diversas classes organizada nos pacotes visão, controle, modelo e dao.<br>
  - Utiliza o padrão abstract factory para abstrair o armazenamento em SQLite.
- - Toda iteração com banco de dados é tratada diretamente pelo DAO(Data Access Object).<br>
+ - Toda iteração com banco de dados é tratada diretamente pelo DAO(Data Access Object) utilizando SQLiteOpenHelper.<br>
  - Os dados de configuração ( Database) da integração do java com o banco de dados estão no arquivo src/dao/SQLiteDadosBanco.java.<br>
  
 
