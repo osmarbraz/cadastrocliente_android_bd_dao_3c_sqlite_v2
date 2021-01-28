@@ -1,17 +1,17 @@
 package com.cadastrocliente.dao.cliente;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.Cursor;
+
+import com.cadastrocliente.dao.SQLiteBDHelper;
+import com.cadastrocliente.dao.SQLiteDAOFactory;
+import com.cadastrocliente.entidade.Cliente;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.cadastrocliente.dao.SQLiteDAOFactory;
-import com.cadastrocliente.dao.SQLiteBDHelper;
-import com.cadastrocliente.entidade.Cliente;
 
 /**
  * Implementa a persistência de cliente utilizando SQLite.
@@ -31,6 +31,13 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
         dbHelper = new SQLiteBDHelper(getContext());
     }
 
+    /**
+     * Retorna uma lista com os objetos segundo os critérios do filtro e ordem.
+     *
+     * @param filtros Lista dos campos a serem utilizados no filtro.
+     * @param ordem   Ordem dos dados na consulta.
+     * @return Lista com os objetos.
+     */
     private List select(List<String> filtros, String ordem) {
         List lista = new LinkedList();
         String[] colunas = METADADOSSELECT.split(",");
@@ -38,7 +45,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
         Cursor cursor = null;
         try {
             db = dbHelper.getReadableDatabase();
-            cursor = db.query(TABLE, colunas, montaFiltro(filtros, " and "), null, null, null, ordem , null);
+            cursor = db.query(TABLE, colunas, montaFiltro(filtros, " and "), null, null, null, ordem, null);
             while (cursor.moveToNext()) {
                 Cliente cliente = new Cliente();
                 //Recupera o valor do campo pelo índice do nome da coluna
@@ -57,14 +64,16 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
             if (cursor != null) {
                 try {
                     cursor.close();
-                } catch (Exception e) {;
+                } catch (Exception e) {
+                    ;
                 }
                 cursor = null;
             }
             if (db != null) {
                 try {
                     db.close();
-                } catch (Exception e) {;
+                } catch (Exception e) {
+                    ;
                 }
                 db = null;
             }
@@ -80,9 +89,9 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
             try {
                 db = dbHelper.getWritableDatabase();
                 ContentValues valores = new ContentValues();
-                valores.put(METADADOSUPDATE[0],  preparaSQL(cliente.getClienteId()));
-                valores.put(METADADOSUPDATE[1],  preparaSQL(cliente.getNome()));
-                valores.put(METADADOSUPDATE[2],  preparaSQL(cliente.getCpf()));
+                valores.put(METADADOSUPDATE[0], preparaSQL(cliente.getClienteId()));
+                valores.put(METADADOSUPDATE[1], preparaSQL(cliente.getNome()));
+                valores.put(METADADOSUPDATE[2], preparaSQL(cliente.getCpf()));
                 db.insert(TABLE, null, valores);
                 db.close();
                 db = null;
@@ -94,7 +103,8 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
                 if (db != null) {
                     try {
                         db.close();
-                    } catch (Exception e) {;
+                    } catch (Exception e) {
+                        ;
                     }
                     db = null;
                 }
@@ -112,9 +122,9 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
             try {
                 db = dbHelper.getWritableDatabase();
                 ContentValues valores = new ContentValues();
-                valores.put(METADADOSUPDATE[0],  preparaSQL(cliente.getClienteId()));
-                valores.put(METADADOSUPDATE[1],  preparaSQL(cliente.getNome()));
-                valores.put(METADADOSUPDATE[2],  preparaSQL(cliente.getCpf()));
+                valores.put(METADADOSUPDATE[0], preparaSQL(cliente.getClienteId()));
+                valores.put(METADADOSUPDATE[1], preparaSQL(cliente.getNome()));
+                valores.put(METADADOSUPDATE[2], preparaSQL(cliente.getCpf()));
                 String selecao = PK[0] + " = ? ";
                 String[] selecaoArgumentos = {preparaSQL(cliente.getClienteId())};
                 db.update(TABLE, valores, selecao, selecaoArgumentos);
@@ -128,7 +138,8 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
                 if (db != null) {
                     try {
                         db.close();
-                    } catch (Exception e) {;
+                    } catch (Exception e) {
+                        ;
                     }
                     db = null;
                 }
@@ -159,7 +170,8 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
                 if (db != null) {
                     try {
                         db.close();
-                    } catch (Exception e) {;
+                    } catch (Exception e) {
+                        ;
                     }
                     db = null;
                 }
@@ -171,6 +183,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
 
     /**
      * Monta uma lista com os filtros para consulta de acordo como preenchimento dos atributos do objeto
+     *
      * @param obj Objeto que possui os dados do filtro.
      * @return Uma lista com os dados do filtro.
      */
@@ -180,15 +193,15 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
 
             List<String> filtros = new ArrayList<String>();
 
-            if(cliente.getClienteId() != ""){
-                filtros.add(TABLE+"." + PK[0] + "= '" + cliente.getClienteId() + "'");
+            if (cliente.getClienteId() != "") {
+                filtros.add(TABLE + "." + PK[0] + "= '" + cliente.getClienteId() + "'");
             }
 
-            if(!cliente.getNome().equals("")){
+            if (!cliente.getNome().equals("")) {
                 filtros.add(TABLE + ".NOME like '" + cliente.getNome() + "'");
             }
 
-            if(!cliente.getCpf().equals("")){
+            if (!cliente.getCpf().equals("")) {
                 filtros.add(TABLE + ".NOME like '" + cliente.getCpf() + "'");
             }
 
@@ -211,12 +224,14 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
             if (db != null) {
                 try {
                     db.close();
-                } catch (Exception e) {;
+                } catch (Exception e) {
+                    ;
                 }
                 db = null;
             }
         }
     }
+
     public long getNumeroRegistros() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         return DatabaseUtils.queryNumEntries(db, TABLE);

@@ -4,13 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.cadastrocliente.dao.SQLiteDadosBanco;
 import com.cadastrocliente.dao.cliente.SQLiteClienteMetaDados;
 
 public class SQLiteBDHelper extends SQLiteOpenHelper implements SQLiteDadosBanco, SQLiteClienteMetaDados {
 
     /**
      * Construtor do banco de dados.
+     *
      * @param context Contexto do aplicativo
      */
     public SQLiteBDHelper(Context context) {
@@ -19,6 +19,7 @@ public class SQLiteBDHelper extends SQLiteOpenHelper implements SQLiteDadosBanco
 
     /**
      * Cria o banco de dados.
+     *
      * @param db Banco de dados a ser utilizado.
      */
     @Override
@@ -31,7 +32,8 @@ public class SQLiteBDHelper extends SQLiteOpenHelper implements SQLiteDadosBanco
 
     /**
      * Atualiza o banco de dados.
-     * @param db Banco de dados a ser utilizado.
+     *
+     * @param db         Banco de dados a ser utilizado.
      * @param oldVersion Versão antiga.
      * @param newVersion Nova versão.
      */

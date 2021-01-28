@@ -2,8 +2,8 @@ package com.cadastrocliente;
 
 import android.content.Context;
 
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.cadastrocliente.dao.DAOFactory;
 import com.cadastrocliente.entidade.Cliente;
@@ -14,7 +14,10 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Teste unitário dependente do contexto, que serão executando no dispositivo Android.
@@ -28,7 +31,7 @@ public class ExampleInstrumentedTest {
     private Context appContext = null;
 
     @Before
-    public void inicializa(){
+    public void inicializa() {
         // Recupera o contexto do teste.
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
@@ -37,13 +40,14 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         assertEquals("com.cadastrocliente", appContext.getPackageName());
     }
+
     @Test
-    public void inserirCliente(){
+    public void inserirCliente() {
         //Define o contexto do banco de dados
         DAOFactory.setContext(appContext);
 
         //Instancia um cliente co dados
-        Cliente cliente = new Cliente("1","Teste","11111111111");
+        Cliente cliente = new Cliente("1", "Teste", "11111111111");
         //Realiza a inserção
         cliente.inserir();
         //Recupera o cliente
@@ -53,12 +57,12 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void consultarCliente(){
+    public void consultarCliente() {
         //Define o contexto do banco de dados
         DAOFactory.setContext(appContext);
 
         //Instancia um cliente co dados
-        Cliente cliente = new Cliente("1","Teste","11111111111");
+        Cliente cliente = new Cliente("1", "Teste", "11111111111");
         //Realiza a inserção
         cliente.inserir();
 
@@ -73,19 +77,19 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void excluirCliente(){
+    public void excluirCliente() {
         //Define o contexto do banco de dados
         DAOFactory.setContext(appContext);
 
         //Instancia um cliente co dados
-        Cliente cliente = new Cliente("1","Teste","11111111111");
+        Cliente cliente = new Cliente("1", "Teste", "11111111111");
         //Realiza a inserção
         cliente.inserir();
         //Consulta a lista
         List lista = cliente.aplicarFiltro();
 
         if (lista.size() > 0) {
-            Cliente cli = (Cliente)lista.get(0);
+            Cliente cli = (Cliente) lista.get(0);
             cli.excluir();
             lista = cli.aplicarFiltro();
             assertTrue(lista.size() == 0);

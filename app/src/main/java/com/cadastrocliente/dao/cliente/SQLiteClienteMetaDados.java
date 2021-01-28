@@ -39,5 +39,5 @@ public interface SQLiteClienteMetaDados {
             "(" + PK[0] + " integer, " +
             "NOME varchar(100), " +
             "CPF varchar(11), " +
-            "CONSTRAINT PK_CLIENTE PRIMARY KEY ("+ PK[0] + "))";
+            "CONSTRAINT PK_CLIENTE PRIMARY KEY (" + PK[0] + "))";
 }
