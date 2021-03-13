@@ -81,7 +81,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
         return lista;
     }
 
-    public boolean inserir(Object obj) {
+    public boolean incluir(Object obj) {
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
             SQLiteDatabase db = null;
@@ -202,7 +202,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
             }
 
             if (!cliente.getCpf().equals("")) {
-                filtros.add(TABLE + ".NOME like '" + cliente.getCpf() + "'");
+                filtros.add(TABLE + ".CPF like '" + cliente.getCpf() + "'");
             }
 
             return select(filtros, PK[0]);
