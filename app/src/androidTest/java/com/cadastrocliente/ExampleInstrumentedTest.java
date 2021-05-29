@@ -49,7 +49,7 @@ public class ExampleInstrumentedTest {
         //Instancia um cliente co dados
         Cliente cliente = new Cliente("1", "Teste", "11111111111");
         //Realiza a inserção
-        cliente.inserir();
+        cliente.incluir();
         //Recupera o cliente
         List lista = cliente.aplicarFiltro();
         //Se a lista não é vazia
@@ -64,7 +64,7 @@ public class ExampleInstrumentedTest {
         //Instancia um cliente co dados
         Cliente cliente = new Cliente("1", "Teste", "11111111111");
         //Realiza a inserção
-        cliente.inserir();
+        cliente.incluir();
 
         //Objeto de consulta
         Cliente consulta = new Cliente();
@@ -84,7 +84,7 @@ public class ExampleInstrumentedTest {
         //Instancia um cliente co dados
         Cliente cliente = new Cliente("1", "Teste", "11111111111");
         //Realiza a inserção
-        cliente.inserir();
+        cliente.incluir();
         //Consulta a lista
         List lista = cliente.aplicarFiltro();
 
